@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Education Detail Form | Hire Me</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+	
+	<style>
+		.hor_inputs{
+			display: flex;
+			flex-direction:row;
+			justify-content:space-around;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="container" style="width:40%;margin-top:6%">
+
+		<h3 style="text-align:center">Education Details</h3>
+			
+
+		<div style="margin-top:30px;">
+			<form>
+			<div class="form-group">
+			   <input type="text" class="form-control" name="school"  placeholder="School Name">
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="level" placeholder="Level">
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="percentage" placeholder="Percentage">
+			</div>
+				
+			<div class="form-group hor_inputs">
+			   <input type="text" onfocus="(this.type='date')" class="form-control" style="margin-right:10px;" name="from_date"  placeholder="From Date">
+			   <input type="text" onfocus="(this.type='date')" class="form-control" style="margin-left:10px;" name="to_date"  placeholder="To Date">
+			</div>
+
+
+
+
+			  <button type="submit" class="btn btn-primary" style="width:100%;margin-top: 8px;">SUBMIT</button>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
