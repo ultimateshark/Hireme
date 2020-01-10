@@ -3,6 +3,7 @@ from models import db
 from flask_migrate import Migrate
 from flask_mail import Mail,Message
 from datetime import datetime,timedelta
+from passlib.hash import sha256_crypt
 import uuid
 import random
 import string
@@ -18,12 +19,14 @@ db.app=app#assign the app to the db app
 #configurations for sending email
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT']=465
-app.config['MAIL_USERNAME']='example@example.com'
+app.config['MAIL_USERNAME']='ultimateshark.in@gmail.com'
 app.config['MAIL_PASSWORD']='***********'
 app.config['MAIL_USE_TLS']=False
 app.config['MAIL_USE_SSL']=True
 mail=Mail(app)
 
+
+#initializing app for migration
 migrate = Migrate(app, db)
 
 def login_required(f):
@@ -73,54 +76,6 @@ def Home():
     return render_template("home.html")
 
 
-
-@app.route("/signup-recruiter")
-def Sign_Up_Recruiter():
-    try:
-        if request.method=="POST":
-            email=request.form['email']
-            passwd=request.form['passwd']
-            user=Recruiter(email=email,passwd=passwd)
-            db.session.add(user)
-            token=get_token()
-            check=Verification(token=token,for_recruiter=True,user_id=user.recruiter_id)
-            db.session.add(check)
-            msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
-            msg.body="Please Click on the link to verify your account at Hireme\n: "+token
-            mail.send(msg)
-            db.session.commit()
-            flash("Please Check Your Email For Verification Link")
-            return redirect(url_for("Home"))
-        else:
-            flash("Invalid Request")
-    except:
-        flash("Something Went Wrong!!!")
-        return redirect(url_for("Home"))
-
-@app.route("/signup-seeker")
-def Sign_Up_Seeker():
-    try:
-        if request.method=="POST":
-            email=request.form['email']
-            passwd=request.form['passwd']
-            user=Job_seeker(email=email,passwd=passwd)
-            db.session.add(user)
-            token=get_token()
-            check=Verification(token=token,for_recruiter=False,user_id=user.recruiter_id)
-            db.session.add(check)
-            msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
-            msg.body="Please Click on the link to verify your account at Hireme\n: "+token
-            mail.send(msg)
-            db.session.commit()
-            flash("Please Check Your Email For Verification Link")
-            return redirect(url_for("Home"))
-        else:
-            flash("Invalid Request")
-    except:
-        flash("Something Went Wrong!!!")
-        return redirect(url_for("Home"))
-
-
 @app.route("/verify/<string:token>")
 def Verify(token):
     try:
@@ -138,3 +93,90 @@ def Verify(token):
     except:
         flash("Something Went Wrong!!!")
         return redirect(url_for("Home"))
+
+
+
+@app.route("/login-seeker")
+def Login_Seeker():
+	try:
+		if request.method=="POST":
+			email=request.form['email']
+			passwd=request.form['passwd']
+			user=Job_seeker.query.filter_by(email=email).all()
+			if len(user)==0:
+				user=Job_seeker(email=email,passwd=passwd)
+				db.session.add(user)
+				token=get_token()
+				check=Verification(token=token,for_recruiter=False,user_id=user.recruiter_id)
+				db.session.add(check)
+				msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
+				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://127.0.0.1:5000/verify/"+token
+				mail.send(msg)
+				db.session.commit()
+				flash("Account Created Please Check Your Email For Verification Link")
+				return redirect(url_for("Login_Seeker"))
+			user=user[0]
+			if not user.verified:
+				flash("Please Verify Your Email To Login")
+				return redirect(url_for("Login_Seeker"))
+			if sha256_crypt.verify(user.passwd,passwd):
+				session['logged_in']=True
+				session['username']=user.email
+				flash("Login Successfull")
+				return render_template("Dashboard_seeker.html")
+		else:
+			flash("Invalid Request")
+			return redirect(url_for("Home"))
+	except:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+
+
+@app.route("/login-recruiter")
+def Login_Recruiter():
+	try:
+		if request.method=="POST":
+			email=request.form['email']
+			passwd=request.form['passwd']
+			user=Recruiter.query.filter_by(email=email).all()
+			if len(user)==0:
+				user=Recruiter(email=email,passwd=passwd)
+				db.session.add(user)
+				token=get_token()
+				check=Verification(token=token,for_recruiter=True,user_id=user.recruiter_id)
+				db.session.add(check)
+				msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
+				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://127.0.0.1:5000/verify/"+token
+				mail.send(msg)
+				db.session.commit()
+				flash("Please Check Your Email For Verification Link")
+				return redirect(url_for("Login_Recruiter"))
+			user=user[0]
+			if not user.verified:
+				flash("Please Verify Your Email To Login")
+				return redirect(url_for("Login_Recruiter"))
+			if sha256_crypt.verify(user.passwd,passwd):
+				session['logged_in']=True
+				session['username']=user.email
+				flash("Login Successfull")
+				return render_template("Dashboard_recruiter.html")
+		else:
+			flash("Invalid Request")
+			return redirect(url_for("Home"))
+	except:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+@app.route("/job-list")
+def Job_List():
+	try:
+		user=GetSeekerInfo()
+		intrests=user.interested_stack.split(" ")
+		result=[]
+		for inst in intrests:
+			list_val=Job_posts.query.filter(Job_posts.skills.like(inst)).order_by(Job_posts.date_posted.desc()).all()
+			result.append(list_val)
+		return render_template('all_jobs.html')
+	except Exception as e:
+		raise

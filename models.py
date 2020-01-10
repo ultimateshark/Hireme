@@ -28,6 +28,7 @@ class Job_seeker(db.Model):
     current_company=db.Column(db.String(200))
     role=db.Column(db.String(200))
     place=db.Column(db.String(200))
+    interested_stack=db.Column(db.String(200))
     employment_det=db.relationship('Employment_details',cascade="all,delete",backref=db.backref("seeker")) # one to many relation with Employment table
     education_det=db.relationship('Education_details',cascade="all,delete",backref=db.backref("seeker")) # one to many relationship with Education details table
     applied_to=db.relationship("Relation_Jobpost_Jobseeker",cascade="all,delete",backref=db.backref("seeker"))# many to many relation with job posts table
