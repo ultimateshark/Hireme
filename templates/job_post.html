@@ -2,7 +2,7 @@
 <head>
 	<title>Job Detail Form | Hire Me</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
-	
+
 	<style>
 		.hor_inputs{
 			display: flex;
@@ -12,14 +12,14 @@
 	</style>
 </head>
 <body>
-	
+
 	<div class="container" style="width:40%;margin-top:1%">
 
 		<h3 style="text-align:center">Enter Details of Job</h3>
-			
+
 
 		<div style="margin-top:30px;">
-			<form>
+			<form action="/add-jobpost" method="POST">
 			<div class="form-group">
 			   <input type="text" class="form-control" name="role"  placeholder="Role of the job">
 			</div>
@@ -28,7 +28,7 @@
 			   <input type="text" class="form-control" name="locations" placeholder="Locations">
 			   <small>  &nbsp; Comma Separated</small>
 			</div>
-				
+
 			<div class="form-group hor_inputs">
 			   <input type="text" class="form-control" style="margin-right:10px;" name="min_exp"  placeholder="Minimum Experience Required">
 			   <input type="text" class="form-control" style="margin-left:10px;" name="max_exp"  placeholder="Maximum Experience Required">
@@ -47,7 +47,7 @@
 			   <input type="text" class="form-control" name="skills" placeholder="Skills Required">
 			   <small>  &nbsp; Comma Separated</small>
 			</div>
-			
+
 			<div class="form-group">
 			   <input type="text" class="form-control" name="perks" placeholder="Perks">
 			   <small>  &nbsp; Comma Separated</small>

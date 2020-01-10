@@ -150,13 +150,62 @@ def Add_Employment(user_type):
 			db.session.add(emp)
 			user.employment_det.append(emp)
 			db.session.commit()
-			flash('Education Details Added Successfully')
+			flash('Employment Details Added Successfully')
 			return redirect("/add-employment-page/"+user_type)
 		else:
 			flash("Invalid Request")
 			return redirect(url_for("Home"))
 	except:
 		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+
+@app.route("/add-jobpost-page")
+@login_required
+def Add_Jobpost_Page():
+	try:
+		return render_template('job_post.html')
+	except Exception as e:
+		flash('Something Went Wrong')
+		return redirect(url_for("Home"))
+
+@app.route("/add-jobpost",methods=["GET","POST"])
+@login_required
+def Add_Jobpost():
+	try:
+		if request.method=="POST":
+			user=GetRecruiterInfo()
+			role=request.form['role']
+			locations=request.form['locations']
+			min_exp=request.form['min_exp']
+			max_exp=request.form['max_exp']
+			salary_from=request.form['salary_from']
+			salary_upto=request.form['salary_upto']
+			description=request.form['description']
+			skills=request.form['skills']
+			perks=request.form['perks']
+			post=Job_posts(role=role,loactions=loactions,description=description,salary_range_from=salary_from,salary_range_to=salary_upto,skills=skills,perks=perks,date_posted=datetime.now())
+			db.session.add(post)
+			user.job_posts.append(emp)
+			db.session.commit()
+			flash('Post Added Successfully')
+			return redirect("/add-employment-page/"+user_type)
+		else:
+			flash("Invalid Request")
+			return redirect(url_for("Home"))
+	except:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+@app.route("/posted-jobs")
+@login_required
+def Posted_Jobs():
+	try:
+		user=GetRecruiterInfo()
+		all_posts=user.job_posts
+		return render_template('posted_jobs.html',all_posts=all_posts)
+	except Exception as e:
+		flash('Something Went Wrong')
 		return redirect(url_for("Home"))
 
 
@@ -219,7 +268,7 @@ def Login_Seeker():
 
 @app.route("/login-recruiter",methods=["GET","POST"])
 def Login_Recruiter():
-	# try:
+	try:
 		if request.method=="POST":
 			email=request.form['email']
 			passwd=request.form['passwd']
@@ -244,14 +293,13 @@ def Login_Recruiter():
 				session['logged_in']=True
 				session['username']=user.email
 				flash("Login Successfull")
-				# return render_template("Dashboard_recruiter.html")
-				return "Hello"
+				return render_template("Dashboard_recruiter.html")
 		else:
 			flash("Invalid Request")
 			return redirect(url_for("Home"))
-	# except:
-		# flash("Something Went Wrong!!!")
-		# return redirect(url_for("Home"))
+	except:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
 
 @app.route("/job-list")
 @login_required
@@ -297,7 +345,7 @@ def Apply_To_Job(job_id):
 	try:
 		if request.method=="POST":
 			user=GetSeekerInfo()
-			new_application=Relation_Jobpost_Jobseeker(cover_letter=request.form['cvl'],date_applied=DateTime.now())
+			new_application=Relation_Jobpost_Jobseeker(cover_letter=request.form['cover_letter'],date_applied=datetime.now())
 			db.session.add(new_application)
 			user.applied_to.append(new_application)
 			job=Job_posts.query.filter_by(post_id=job_id).first()
