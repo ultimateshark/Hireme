@@ -273,6 +273,10 @@ def Add_Jobpost():
 			post=Job_posts(role=role,locations=locations,min_experience=min_exp,max_experience=max_exp,description=description,salary_range_from=salary_from,salary_range_to=salary_upto,skills=skills,perks=perks,date_posted=datetime.now())
 			db.session.add(post)
 			user.job_posts.append(post)
+			filename = 'application'+str(post.post_id)+'.jpg'
+			imageData=request.files['pfile'].read()
+			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+				f.write(imageData)
 			db.session.commit()
 			flash('Post Added Successfully')
 			return redirect(url_for("Add_Jobpost_Page"))
@@ -412,6 +416,10 @@ def Update_Profile_Recruiter():
 			user.current_company=company_name
 			user.role=role
 			user.updated=True
+			filename = 'recruiter'+str(user.recruiter_id)+'.jpg'
+			imageData=request.files['pfile'].read()
+			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+				f.write(imageData)
 			db.session.commit()
 			flash('Profile Updated Successfully')
 			return redirect('/dashboard')
@@ -436,12 +444,66 @@ def Update_Profile_Seeker():
 			user.interested_stack=interested_stack
 			user.current_package=current_package
 			user.updated=True
+			filename = 'seeker'+str(user.seeker_id)+'.jpg'
+			imageData=request.files['pfile'].read()
+			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+				f.write(imageData)
 			db.session.commit()
 			flash('Profile Updated Successfully')
 			return redirect('/dashboard')
 	except:
 		flash("Something Went Wrong!!!")
 		return redirect(url_for("Home"))
+
+@app.route('/get-candidate-details/<int:c_id>/<int:job_id>')
+def Get_Candidate_Details(c_id,job_id):
+	try:
+		rel=Relation_Jobpost_Jobseeker.query.filter_by(jobpost_id=job_id,seeker_id=c_id).first()
+		if not rel.for_post.recruiter.recruiter_id==GetRecruiterInfo().recruiter_id:
+			flash("Not Authorized!!!")
+			return redirect('/dashboard')
+		if rel.status==0:
+			rel.status=1
+		seeker=rel.seeker
+		db.session.commit()
+		return render_template('app_prof.html',rel=rel,seeker=seeker)
+	except Exception as e:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+@app.route('/accept-application/<int:app_id>')
+def Accept_Application(app_id):
+	try:
+		rel=Relation_Jobpost_Jobseeker.query.filter_by(application_id=app_id).first()
+		if not rel.for_post.recruiter.recruiter_id==GetRecruiterInfo().recruiter_id:
+			flash("Not Authorized!!!")
+			return redirect('/dashboard')
+		rel.status=2
+		seeker=rel.seeker
+		db.session.commit()
+		return render_template('app_prof.html',rel=rel,seeker=seeker)
+	except Exception as e:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+
+@app.route('/reject-application/<int:app_id>')
+def Reject_Application(app_id):
+	try:
+		rel=Relation_Jobpost_Jobseeker.query.filter_by(application_id=app_id).first()
+		if not rel.for_post.recruiter.recruiter_id==GetRecruiterInfo().recruiter_id:
+			flash("Not Authorized!!!")
+			return redirect('/dashboard')
+		rel.status=3
+		seeker=rel.seeker
+		db.session.commit()
+		return render_template('app_prof.html',rel=rel,seeker=seeker)
+	except Exception as e:
+		flash("Something Went Wrong!!!")
+		return redirect(url_for("Home"))
+
+
+
 
 
 @app.route('/job-list-all')

@@ -19,7 +19,7 @@
 
 
 		<div style="margin-top:30px;">
-			<form action="/add-jobpost" method="POST">
+			<form action="/add-jobpost" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
 			   <input type="text" class="form-control" name="role"  placeholder="Role of the job">
 			</div>
@@ -51,6 +51,9 @@
 			<div class="form-group">
 			   <input type="text" class="form-control" name="perks" placeholder="Perks">
 			   <small>  &nbsp; Comma Separated</small>
+			</div>
+			<div class="form-group">
+			  <input type="file" id="chprof" name="pfile" style="border:1px solid #dadada;border-radius:0px;">
 			</div>
 
 			  <button type="submit" class="btn btn-primary" style="width:100%;margin-top: 8px;">SUBMIT</button>

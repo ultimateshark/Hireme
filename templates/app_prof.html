@@ -82,7 +82,7 @@
 
 <body>
 	<nav >
-	<div onclick="window.open('/','_self')"  class="logo">Hire Me</div>
+	<div class="logo">Hire Me</div>
 
 	<div class="nav_right">
 	<a href="/job-list-all" class="all_job_btn"><div style="color:#fff;font-size:1.3em;">All Jobs</div></a>
@@ -97,29 +97,70 @@
 
 <div class="prof_det_wrap">
 	<div class="prof_img_wrap">
-		<img src="../static/img/seeker{{user.seeker_id}}.jpg"/>
+		<img src="/static/img/seeker{{seeker.seeker_id}}.jpg"/>
 	</div>
 
 	<div style="margin-left:2%;">
-		<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:2em;">{{user.name}}</div>
-		<div style="font-size:1.3em;">{{user.role}}</div>
+	<div style="display: flex;flex-direction: row;">
+		<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:2em;">{{seeker.name}}</div>
+		<div style="font-size:1.3em;">{{seeker.role}}</div>
+		<div style="margin-left:10%;display: flex;flex-direction: row;">
+			{% if rel.status==1 or rel.status==0 %}
+				<a href="/accept-application/{{rel.application_id}}" style="text-decoration:none;color:black">
+			<button style="background:#007944;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
+				Accept
+			</button>
+		</a>
+
+			<a href="/reject-application/{{rel.application_id}}" style="text-decoration:none;color:black;margin-left: 5%">
+			<button style="background:#eb4d55;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
+				Reject
+			</button>
+		</a>
+
+		{% endif %}
+		</div>
+			 <br>
+
+		</div>
+
 
 		<br>
 
 		<div style="font-size:1.3em;" class="det">
-
-			<div><span style="font-weight:bold;">Current Company : </span>{{user.current_company}}</div>
-			<div><span style="font-weight:bold;">Role : </span> {{user.role}}</div>
-			<div><span style="font-weight:bold;">Current Salary : </span>{{user.current_package}}</div>
-			<div><span style="font-weight:bold;">Interested Stack : </span> {{user.interested_stack}}</div>
+			<div><span style="font-weight:bold;">Application Status : </span>
+				{% if rel.status==0 %}
+					Applied/Sent
+				{% endif %}
+				{% if rel.status==1 %}
+					Viewed
+				{% endif %}
+				{% if rel.status==2 %}
+					Accepted
+				{% endif %}
+				{% if rel.status==3 %}
+					Rejected
+				{% endif %}
+			 </div>
+			<div><span style="font-weight:bold;">Interested Stack : </span> {{seeker.interested_stack}}</div>
+			<div><span style="font-weight:bold;">Current Company : </span>{{seeker.current_company}}</div>
+			<div><span style="font-weight:bold;">Role : </span> {{seeker.role}}</div>
+			<div><span style="font-weight:bold;">Current Salary : </span>{{seeker.current_package}}</div>
 		</div>
 	</div>
 </div>
-{% if user.education_det %}
+
+<div style="margin-top:15px;margin-left:7%;">
+	<div style="font-size:1.5em;font-weight:700;font-family:'Monsterrat',sans-serif;">Cover Letter</div>
+	<div style="font-size:1.3em;">{{rel.cover_letter}}</div>
+</div>
+
+
+{% if seeker.education_det %}
 <div style="margin-left: 7%;margin-top:40px;">
 	<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:1.5em;">Educational Details</div>
 
-{% for edu in user.education_det %}
+{% for edu in seeker.education_det %}
 	<div style="font-size:1.3em;margin-top:15px;" class="det">
 			<hr style="width:80%" />
 			<div><span style="font-weight:bold;">School Name : </span> {{edu.school_name}}</div>
@@ -132,11 +173,11 @@
 </div>
 {% endif %}
 
-{% if user.employment_det %}
+{% if seeker.employment_det %}
 <div style="margin-left: 7%;margin-top:40px;">
 	<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:1.5em;">Employment Details</div>
 
-{% for emp in user.employment_det %}
+{% for emp in seeker.employment_det %}
 	<div style="font-size:1.3em;margin-top:15px;" class="det">
 			<hr style="width:80%" />
 			<div><span style="font-weight:bold;">Company Name : </span> {{emp.company_name}}</div>

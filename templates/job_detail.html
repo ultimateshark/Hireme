@@ -117,12 +117,18 @@
 	<div class="job_apply">
 		<div>
 			<div style="font-size:2em;font-family:'Monsterrat',sans-serif;font-weight:700;">{{post.role}}</div>
-			<div style="font-size:1.3em;">By {{post.recruiter.email}}. </div>
+			<div style="font-size:1.3em;">By {{post.recruiter.name}} | @{{post.recruiter.current_company}}</div>
 
 		</div>
 		<div style="margin-left:50%;">
+			{% if not user %}
+				<a href="/apply-to-page/{{post.post_id}}" style="text-decoration:none;color:black">
+			<button style="background:#007944;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
+				Apply For this Job
+			</button>
+			{% endif %}
 			{% if user %}
-			{% if user=='seeker' %}
+			{% if user=='recruiter' %}
 				<a href="/apply-to-page/{{post.post_id}}" style="text-decoration:none;color:black">
 			<button style="background:#007944;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
 				Apply For this Job
@@ -165,7 +171,7 @@
 {% for post in posts %}
 	<a class="job_box_wrap" href="/get-job-details/{{post.post_id}}" style="text-decoration:none;color:black">
 		<div class="job_box">
-			<img src="../static/img/sb.png" style="width:50px;height:50px;">
+			<img src="../static/img/application{{post.post_id}}.jpg" style="width:50px;height:50px;">
 			<div style="margin-left:20px;">
 				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.role}}</div>
 				<div style="font-size:1.2em;">Salary : {{post.salary_range_from}}-{{post.salary_range_to}}</div>

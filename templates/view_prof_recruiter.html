@@ -1,0 +1,152 @@
+<html>
+<head>
+	<title>Profile | Hire Me</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="fonts.css">
+	<style>
+
+		body{
+			margin:0 auto;
+		}
+
+		*{
+			font-family: 'SF';
+		}
+
+		nav{
+			display: flex;
+			flex-direction:row;
+			background:transparent;
+			width:100%;
+			background-color:#10316b;
+			justify-content: space-between;
+			padding-top:15px;
+			padding-bottom:15px;
+		}
+
+		.logo{
+			margin-left:5%;
+			font-size:1.7em;
+			color:#fff;
+			font-family: 'Monsterrat',sans-serif;
+		}
+
+		.nav_right{
+			display: flex;
+			flex-direction:row;
+			margin-right:7%;
+			align-items: center;
+		}
+
+		.search_wrap{
+			margin-left:20px;
+		}
+
+
+		a.all_job_btn{
+			text-decoration: none;
+		}
+
+		a.all_job_btn:hover{
+			transform: scale(1.1);
+			transition:0.2s ease-in;
+		}
+
+
+		.prof_det_wrap{
+			display: flex;
+			flex-direction: row;
+			margin-left:5%;
+			margin-top:20px;
+		}
+
+		.prof_img_wrap{
+			/*border:1px solid #000;
+			height:250px;
+			width:250px;
+			border-radius:100px;*/
+		}
+
+		.prof_img_wrap img{
+		  width: 200px;
+		  height: 200px;
+		  border-radius: 50%;
+		}
+
+		.det div{
+			margin-top:8px;
+		}
+
+	</style>
+</head>
+
+<body>
+	<nav >
+	<div onclick="window.open('/','_self')"  class="logo">Hire Me</div>
+
+	<div class="nav_right">
+	<a href="/job-list-all" class="all_job_btn"><div style="color:#fff;font-size:1.3em;">All Jobs</div></a>
+		<div class="search_wrap">
+			<input type="search" placeholder="Search for the jobs" style="height:30px">
+			<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
+		</div>
+	</div>
+</nav>
+
+<br><br>
+
+<div class="prof_det_wrap">
+	<div class="prof_img_wrap">
+		<img src="../static/img/recruiter{{user.recruiter_id}}.jpg"/>
+	</div>
+
+	<div style="margin-left:2%;">
+		<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:2em;">{{user.name}}</div>
+		<div style="font-size:1.3em;">{{user.current_company}}</div>
+
+		<br>
+
+		<div style="font-size:1.3em;" class="det">
+
+			<div><span style="font-weight:bold;">Current Company : </span>{{user.current_company}}</div>
+			<div><span style="font-weight:bold;">Role : </span> {{user.role}}</div>
+			<div><span style="font-weight:bold;">Current Salary : </span>{{user.current_package}}</div>
+		</div>
+	</div>
+</div>
+{% if user.education_det %}
+<div style="margin-left: 7%;margin-top:40px;">
+	<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:1.5em;">Educational Details</div>
+
+{% for edu in user.education_det %}
+	<div style="font-size:1.3em;margin-top:15px;" class="det">
+			<hr style="width:80%" />
+			<div><span style="font-weight:bold;">School Name : </span> {{edu.school_name}}</div>
+			<div><span style="font-weight:bold;">Education Level : </span>{{edu.education_level}}</div>
+			<div><span style="font-weight:bold;">Percentage : </span> {{edu.percentage}}</div>
+			<div><span style="font-weight:bold;">From-To Date : </span>{{edu.from_date}} - {{edu.to_date}}</div>
+	</div>
+	{% endfor %}
+
+</div>
+{% endif %}
+
+{% if user.employment_det %}
+<div style="margin-left: 7%;margin-top:40px;">
+	<div style="font-weight:700;font-family:'Monsterrat',sans-serif;font-size:1.5em;">Employment Details</div>
+
+{% for emp in user.employment_det %}
+	<div style="font-size:1.3em;margin-top:15px;" class="det">
+			<hr style="width:80%" />
+			<div><span style="font-weight:bold;">Company Name : </span> {{emp.company_name}}</div>
+			<div><span style="font-weight:bold;">Role : </span>{{emp.role}}</div>
+			<div><span style="font-weight:bold;">From-To Date : </span>{{emp.from_date}} - {{emp.to_date}}</div>
+			<div><span style="font-weight:bold;">Description : </span> {{emp.description}}</div>
+	</div>
+	{% endfor %}
+
+</div>
+{% endif %}
+
+</body>
+</html>

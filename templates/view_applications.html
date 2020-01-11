@@ -149,9 +149,9 @@
 
 <!-- Jinja starts here -->
 {% for post in applications %}
-	<a class="job_box_wrap" href="/get-candidate-details/{{post.seeker.seeker_id}}" style="text-decoration:none;color:black">
+	<a class="job_box_wrap" href="/get-candidate-details/{{post.seeker.seeker_id}}/{{post.jobpost_id}}" style="text-decoration:none;color:black">
 		<div class="job_box">
-			<img src="../static/img/sb.png" style="width:50px;height:50px;">
+			<img src="../static/img/seeker{{post.seeker.seeker_id}}.jpg" style="width:50px;height:50px;">
 			<div style="margin-left:20px;">
 				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.seeker.name}}</div>
 				<div style="font-size:1.2em;">Interested Stack : {{post.seeker.interested_stack}}</div>
