@@ -341,7 +341,7 @@ def Login_Seeker():
 				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://18.188.232.204/verify/"+token
 				mail.send(msg)
 				db.session.commit()
-				flash("Account Created Please Check Your Email For Verification Link")
+				flash("Check Your Email For Verification Link")
 				return redirect('/loginpage/recruiter')
 			user=user[0]
 			if not user.verified:
@@ -561,12 +561,16 @@ def Applied_To():
 @condidate_login_required
 def Apply_To_Job_page(job_id):
 	try:
-		user=GetSeekerInfo()
-		check=Relation_Jobpost_Jobseeker.query.filter_by(seeker_id=user.seeker_id,jobpost_id=job_id).all()
-		if len(check)>0:
-			flash('Already Applied')
-			return redirect('/get-job-details/'+str(job_id))
-		return render_template('application_form.html',job_id=job_id)
+		try:
+			user=GetSeekerInfo()
+			check=Relation_Jobpost_Jobseeker.query.filter_by(seeker_id=user.seeker_id,jobpost_id=job_id).all()
+			if len(check)>0:
+				flash('Already Applied')
+				return redirect('/get-job-details/'+str(job_id))
+			return render_template('application_form.html',job_id=job_id)
+		except:
+			flash('Please Login First')
+			return redirect('/')
 	except Exception as e:
 		flash("Something Went Wrong!!!")
 		return redirect(url_for("Home"))
@@ -589,8 +593,7 @@ def Apply_To_Job(job_id):
 			job.applications.append(new_application)
 			db.session.commit()
 			flash("Application Sent!!!")
-			# return redirect(url_for('Job_List'))
-			return "hello"
+			return redirect(url_for('Job_List'))
 	except Exception as e:
 		flash("Something Went Wrong!!!")
 		return redirect(url_for("Home"))
