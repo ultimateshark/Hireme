@@ -275,7 +275,7 @@ def Add_Jobpost():
 			user.job_posts.append(post)
 			filename = 'application'+str(post.post_id)+'.jpg'
 			imageData=request.files['pfile'].read()
-			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+			with open('/home/ubuntu/Hireme/Hireme/static/img/'+filename, 'wb') as f:
 				f.write(imageData)
 			db.session.commit()
 			flash('Post Added Successfully')
@@ -418,7 +418,7 @@ def Update_Profile_Recruiter():
 			user.updated=True
 			filename = 'recruiter'+str(user.recruiter_id)+'.jpg'
 			imageData=request.files['pfile'].read()
-			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+			with open('/home/ubuntu/Hireme/Hireme/static/img/'+filename, 'wb') as f:
 				f.write(imageData)
 			db.session.commit()
 			flash('Profile Updated Successfully')
@@ -446,7 +446,7 @@ def Update_Profile_Seeker():
 			user.updated=True
 			filename = 'seeker'+str(user.seeker_id)+'.jpg'
 			imageData=request.files['pfile'].read()
-			with open('/home/ultimateshark/Websites/Hireme/static/img/'+filename, 'wb') as f:
+			with open('/home/ubuntu/Hireme/Hireme/static/img/'+filename, 'wb') as f:
 				f.write(imageData)
 			db.session.commit()
 			flash('Profile Updated Successfully')
