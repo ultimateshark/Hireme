@@ -342,7 +342,7 @@ def Login_Seeker():
 				mail.send(msg)
 				db.session.commit()
 				flash("Account Created Please Check Your Email For Verification Link")
-				return redirect(url_for("Login_Seeker"))
+				return redirect('/loginpage/recruiter')
 			user=user[0]
 			if not user.verified:
 				flash("Please Verify Your Email To Login")
@@ -385,7 +385,7 @@ def Login_Recruiter():
 				mail.send(msg)
 				db.session.commit()
 				flash("Please Check Your Email For Verification Link")
-				return redirect(url_for("Login_Recruiter"))
+				return redirect('/loginpage/recruiter')
 			user=user[0]
 			if not user.verified:
 				flash("Please Verify Your Email To Login")
