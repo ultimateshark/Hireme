@@ -199,7 +199,7 @@ def Add_Education(user_type):
 			user.education_det.append(edu)
 			db.session.commit()
 			flash('Education Details Added Successfully')
-			return redirect("/add-education-page/"+user_type)
+			return redirect("/")
 		else:
 			flash("Invalid Request")
 			return redirect(url_for("Home"))
@@ -237,7 +237,7 @@ def Add_Employment(user_type):
 			user.employment_det.append(emp)
 			db.session.commit()
 			flash('Employment Details Added Successfully')
-			return redirect("/add-employment-page/"+user_type)
+			return redirect("/")
 		else:
 			flash("Invalid Request")
 			return redirect(url_for("Home"))

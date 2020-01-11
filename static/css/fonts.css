@@ -3,6 +3,5 @@
 
 @font-face{
 	font-family:'SF';
-	src:url('fonts/SF.ttf') format('truetype');
+	src:url('/static/css/fonts/SF.ttf') format('truetype');
 }
-
