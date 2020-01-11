@@ -92,6 +92,32 @@
 			transition:0.3s ease-in;
 		}
 
+		.desc{
+			width:70%;
+		}
+
+		.apply_btn_sec{
+			margin-left:40%;
+		}
+
+		@media only screen and (max-width:600px){
+			.desc{
+				width:100%;
+				margin:0 auto;
+			}
+
+			.job_apply{
+				display: flex;
+				flex-direction: column;
+			}
+
+			.apply_btn_sec{
+				margin-left: 0%;
+				margin-top:20px;
+			}
+		}
+
+
 	</style>
 </head>
 
@@ -120,7 +146,7 @@
 			<div style="font-size:1.3em;">By {{post.recruiter.name}} | @{{post.recruiter.current_company}}</div>
 
 		</div>
-		<div style="margin-left:50%;">
+		<div class="apply_btn_sec">
 			{% if user %}
 			{% if user=='seeker' %}
 				<a href="/apply-to-page/{{post.post_id}}" style="text-decoration:none;color:black">
@@ -155,7 +181,7 @@
 		<div><span style="font-weight:bold;">Salary : </span> {{post.salary_range_from}}-{{post.salary_range_to}}</div>
 		<div><span style="font-weight:bold;">Skills : </span>{{post.skills}}</div>
 		<div><span style="font-weight:bold;">Perks : </span>{{post.perks}}</div>
-		<div style="width:40%;"><span style="font-weight:bold;">Description : </span>{{post.description}}</div>
+		<div class="det"><span style="font-weight:bold;">Description : </span>{{post.description}}</div>
 	</div>
 
 </div>
