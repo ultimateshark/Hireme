@@ -338,7 +338,7 @@ def Login_Seeker():
 				check=Verification(token=token,for_recruiter=False,user_id=user.seeker_id)
 				db.session.add(check)
 				msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
-				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://127.0.0.1:5000/verify/"+token
+				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://18.188.232.204/verify/"+token
 				mail.send(msg)
 				db.session.commit()
 				flash("Account Created Please Check Your Email For Verification Link")
@@ -381,7 +381,7 @@ def Login_Recruiter():
 				check=Verification(token=token,for_recruiter=True,user_id=user.recruiter_id)
 				db.session.add(check)
 				msg=Message('From Hireme',sender='ultimateshark.in@gmail.com',recipients=[email])
-				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://127.0.0.1:5000/verify/"+token
+				msg.body="Please Click on the link to verify your account at Hireme\n: "+"http://18.188.232.204/verify/"+token
 				mail.send(msg)
 				db.session.commit()
 				flash("Please Check Your Email For Verification Link")
