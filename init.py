@@ -558,7 +558,7 @@ def Applied_To():
 		return redirect(url_for("Home"))
 
 @app.route("/apply-to-page/<int:job_id>")
-@login_required
+@condidate_login_required
 def Apply_To_Job_page(job_id):
 	try:
 		try:
