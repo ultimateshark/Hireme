@@ -151,7 +151,7 @@
 {% for post in posts %}
 	<a class="job_box_wrap" href="/get-job-details/{{post.for_post.post_id}}" style="text-decoration:none;color:black">
 		<div class="job_box">
-			<img src="../static/img/application{{post.post_id}}.jpg" style="width:50px;height:50px;">
+			<img src="/static/img/application{{post.post_id}}.jpg" style="width:50px;height:50px;">
 			<div style="margin-left:20px;">
 				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.for_post.role}}</div>
 				<div style="font-size:1.2em;">Salary : {{post.for_post.salary_range_from}}-{{post.for_post.salary_range_to}}</div>
