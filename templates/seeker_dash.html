@@ -125,10 +125,15 @@
 
 
 <nav >
-	<div onclick="window.open('/','_self')" class="logo">Hire Me</div>
+	<div  onclick="window.open('/','_self')" class="logo">Hire Me</div>
 
 	<div class="nav_right">
-		<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
+		<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1em;margin-left:10px;margin-top:-15px">All Jobs</div></a>
+    <a href="/add-education-page/seeker" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1em;margin-left:10px;margin-top:-15px">Add Education</div></a>
+    <a href="/add-employment-page/seeker" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1em;margin-left:10px;margin-top:-15px">Add Employment</div></a>
+		<a href="/view-profile-page" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1em;margin-left:10px;margin-top:-15px">View Profile</div></a>
+		<a href="/logout" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1em;margin-left:10px;margin-top:-15px">Logout</div></a>
+
 		<div class="search_wrap">
 			<form action="/job-list-search" method="POST">
 			<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
@@ -141,11 +146,11 @@
 
 <div class="bg_cont">
 	<div class="login_btns_wrap">
-		<a href="/loginpage/seeker">
-    <button>Candidate Login</button>
+		<a href="/applied-jobs">
+    <button>Applied Jobs</button>
   </a>
-  <a href="/loginpage/recruiter">
-		<button>Recruiter Login</button>
+  <a href="/job-list">
+		<button>My Chart</button>
   </a>
 	</div>
 </div>

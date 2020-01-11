@@ -125,33 +125,22 @@
 
 
 <nav >
-	<div onclick="window.open('/','_self')" class="logo">Hire Me</div>
+	<div  onclick="window.open('/','_self')" class="logo">Hire Me</div>
 
 	<div class="nav_right">
-		<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
-		<div class="search_wrap">
-			<form action="/job-list-search" method="POST">
-			<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
-			<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
-		</form>
-		</div>
+	<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
+	<div class="search_wrap">
+		<form action="/job-list-search" method="POST">
+		<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
+		<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
+	</form>
+	</div>
 	</div>
 </nav>
 
 
-<div class="bg_cont">
-	<div class="login_btns_wrap">
-		<a href="/loginpage/seeker">
-    <button>Candidate Login</button>
-  </a>
-  <a href="/loginpage/recruiter">
-		<button>Recruiter Login</button>
-  </a>
-	</div>
-</div>
-
-<div style="padding-left:8%;padding-right:5%;margin-top:15px;">
-	<div style="font-size:1.7em;">Recent Jobs</div>
+<div style="padding-left:5%;padding-right:5%;margin-top:15px;">
+	<div style="font-size:1.7em;">Applied Jobs</div>
 </div>
 
 
@@ -160,13 +149,13 @@
 
 <!-- Jinja starts here -->
 {% for post in posts %}
-	<a class="job_box_wrap" href="/get-job-details/{{post.post_id}}" style="text-decoration:none;color:black">
+	<a class="job_box_wrap" href="/get-job-details/{{post.for_post.post_id}}" style="text-decoration:none;color:black">
 		<div class="job_box">
 			<img src="../static/img/sb.png" style="width:50px;height:50px;">
 			<div style="margin-left:20px;">
-				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.role}}</div>
-				<div style="font-size:1.2em;">Salary : {{post.salary_range_from}}-{{post.salary_range_to}}</div>
-				<div style="font-size:1.2em;">{{post.locations}}</div>
+				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.for_post.role}}</div>
+				<div style="font-size:1.2em;">Salary : {{post.for_post.salary_range_from}}-{{post.for_post.salary_range_to}}</div>
+				<div style="font-size:1.2em;">{{post.for_post.locations}}</div>
 			</div>
 	 	</div>
 	</a>

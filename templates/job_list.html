@@ -125,33 +125,22 @@
 
 
 <nav >
-	<div onclick="window.open('/','_self')" class="logo">Hire Me</div>
+	<div onclick="window.open('/','_self')"  class="logo">Hire Me</div>
 
 	<div class="nav_right">
-		<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
-		<div class="search_wrap">
-			<form action="/job-list-search" method="POST">
-			<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
-			<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
-		</form>
-		</div>
+	<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
+	<div class="search_wrap">
+		<form action="/job-list-search" method="POST">
+		<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
+		<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
+	</form>
+	</div>
 	</div>
 </nav>
 
 
-<div class="bg_cont">
-	<div class="login_btns_wrap">
-		<a href="/loginpage/seeker">
-    <button>Candidate Login</button>
-  </a>
-  <a href="/loginpage/recruiter">
-		<button>Recruiter Login</button>
-  </a>
-	</div>
-</div>
-
-<div style="padding-left:8%;padding-right:5%;margin-top:15px;">
-	<div style="font-size:1.7em;">Recent Jobs</div>
+<div style="padding-left:5%;padding-right:5%;margin-top:15px;">
+	<div style="font-size:1.7em;">{{heading}}</div>
 </div>
 
 

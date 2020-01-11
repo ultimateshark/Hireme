@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Job Detail Form | Hire Me</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+
+	<style>
+		.hor_inputs{
+			display: flex;
+			flex-direction:row;
+			justify-content:space-around;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container" style="width:40%;margin-top:1%">
+
+		<h3 style="text-align:center">Update Profile</h3>
+
+
+		<div style="margin-top:30px;">
+			<form action="/update-profile/seeker" method="POST">
+			<div class="form-group">
+			   <input type="text" class="form-control" name="name"  placeholder="Enter Name">
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="interested_stack" placeholder="Interested Stack">
+			   <small>  &nbsp; Comma Separated</small>
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="company_name" rows="4" placeholder="Enter Company Name" />
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="role" placeholder="Enter Current Role">
+			</div>
+
+			<div class="form-group">
+			   <input type="text" class="form-control" name="current_package" placeholder="Current CTC">
+			</div>
+
+			  <button type="submit" class="btn btn-primary" style="width:100%;margin-top: 8px;">SUBMIT</button>
+			</form>
+		</div>
+	</div>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript">
+		  {% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		      swal('{{message}}');
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+		</script>
+</body>
+</html>

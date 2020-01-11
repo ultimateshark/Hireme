@@ -10,9 +10,10 @@ class Recruiter(db.Model):
     email=db.Column(db.String(50),unique=True,nullable=False)
     passwd=db.Column(db.String(200),nullable=False)
     verified=db.Column(db.Boolean,default=False) #to check if user email is verified or not
+    updated=db.Column(db.Boolean,default=False)
     current_company=db.Column(db.String(200))
     role=db.Column(db.String(200))
-    place=db.Column(db.String(200))
+    name=db.Column(db.String(50))
     employment_det=db.relationship('Employment_details',cascade="all,delete",backref=db.backref("recruiter")) # one to many relation with Employment table
     education_det=db.relationship('Education_details',cascade="all,delete",backref=db.backref("recruiter")) # one to many relationship with Education details table
     job_posts=db.relationship('Job_posts',cascade="all,delete",backref=db.backref("recruiter")) # one to many relation with Job Posts table
@@ -25,10 +26,12 @@ class Job_seeker(db.Model):
     email=db.Column(db.String(50),unique=True,nullable=False)
     passwd=db.Column(db.String(200),nullable=False)
     verified=db.Column(db.Boolean,default=False) #to check if user email is verified or not
-    current_company=db.Column(db.String(200))
-    role=db.Column(db.String(200))
-    place=db.Column(db.String(200))
+    updated=db.Column(db.Boolean,default=False)
     interested_stack=db.Column(db.String(200))
+    current_company=db.Column(db.String(200))
+    current_package=db.Column(db.String(200))
+    role=db.Column(db.String(200))
+    name=db.Column(db.String(50))
     employment_det=db.relationship('Employment_details',cascade="all,delete",backref=db.backref("seeker")) # one to many relation with Employment table
     education_det=db.relationship('Education_details',cascade="all,delete",backref=db.backref("seeker")) # one to many relationship with Education details table
     applied_to=db.relationship("Relation_Jobpost_Jobseeker",cascade="all,delete",backref=db.backref("seeker"))# many to many relation with job posts table
@@ -41,7 +44,6 @@ class Employment_details(db.Model):
     employment_id=db.Column(db.Integer,primary_key=True)
     company_name=db.Column(db.String(200),nullable=False)
     role=db.Column(db.String(200),nullable=False)
-    place=db.Column(db.String(200))
     from_date=db.Column(db.DateTime)
     to_date=db.Column(db.DateTime)
     description=db.Column(db.String(1000),nullable=True)
@@ -68,7 +70,7 @@ class Job_posts(db.Model):
     post_id=db.Column(db.Integer,primary_key=True)
     recruiter_id=db.Column(db.Integer,db.ForeignKey("recruiter.recruiter_id"))
     role=db.Column(db.String(200),nullable=False)
-    loactions=db.Column(db.String(200),default="Not Specified")
+    locations=db.Column(db.String(200),default="Not Specified")
     min_experience=db.Column(db.Integer,default=0) #minimum experience required for the post
     max_experience=db.Column(db.Integer) #maximum experience required for the post
     salary_range_from=db.Column(db.Float)

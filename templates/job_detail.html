@@ -1,0 +1,192 @@
+<html>
+<head>
+	<title>Job Detail | Hire Me</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="fonts.css">
+	<style>
+
+		body{
+			margin:0 auto;
+		}
+
+		*{
+			font-family: 'SF';
+		}
+
+		nav{
+			display: flex;
+			flex-direction:row;
+			background:transparent;
+			width:100%;
+			background-color:#10316b;
+			justify-content: space-between;
+			padding-top:15px;
+			padding-bottom:2px;
+		}
+
+		.logo{
+			margin-left:5%;
+			font-size:1.7em;
+			color:#fff;
+			font-family: 'Monsterrat',sans-serif;
+
+		}
+
+		.bg_cont{
+			background:url('img/main.png') fixed;
+			background-size:contain;
+			width:100%;
+			padding-top:8%;
+			padding-bottom:8%;
+		}
+
+		.nav_right{
+			display: flex;
+			flex-direction:row;
+			margin-right:7%;
+			align-items: center;
+		}
+
+		.search_wrap{
+			margin-left:20px;
+		}
+
+
+		.job_apply{
+			display: flex;
+			flex-direction: row;
+		}
+
+		button:hover{
+			cursor: pointer;
+			opacity:0.7;
+		}
+
+		.det div{
+			margin-top:8px;
+		}
+		.recent_jobs_cont{
+			margin:10px 5% 20px 10%;
+			flex-direction: row;
+		}
+		.job_box_wrap {
+		  float:left;
+		}
+
+		.job_box{
+		  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.4);
+		  border-radius:8px;
+		  margin-left:20px;
+		  margin-top:20px;
+		  overflow: hidden;
+		  display:flex;
+		  flex-direction: row;
+		  align-items: center;
+		  padding:10px 20px;
+		}
+
+
+		.recent_jobs_cont a:hover{
+			cursor: pointer;
+			transform: translateY(-5px);
+			transition:0.3s ease-in;
+		}
+
+	</style>
+</head>
+
+<body>
+	<nav >
+	<div  onclick="window.open('/','_self')" class="logo">Hire Me</div>
+
+	<div class="nav_right">
+	<a href="/job-list-all" style="text-decoration:none;color:black"><div style="color:#fff;font-size:1.3em;margin-top:-15px">All Jobs</div></a>
+	<div class="search_wrap">
+		<form action="/job-list-search" method="POST">
+		<input type="search" name="key" placeholder="Search for the jobs" style="height:30px">
+		<button class="search_btn" style="background:#e25822;border:none;color:#fff;margin-left:-10px;height:30px;">Search</button>
+	</form>
+	</div>
+	</div>
+</nav>
+
+<br><br>
+
+<div style="padding-left:10%;padding-right:5%;">
+
+	<div class="job_apply">
+		<div>
+			<div style="font-size:2em;font-family:'Monsterrat',sans-serif;font-weight:700;">{{post.role}}</div>
+			<div style="font-size:1.3em;">By {{post.recruiter.email}}. </div>
+
+		</div>
+		<div style="margin-left:50%;">
+			{% if user %}
+			{% if user=='seeker' %}
+				<a href="/apply-to-page/{{post.post_id}}" style="text-decoration:none;color:black">
+			<button style="background:#007944;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
+				Apply For this Job
+			</button>
+			{% endif %}
+			{% if user=='recruiter' %}
+				<a href="/applications/{{post.post_id}}" style="text-decoration:none;color:black">
+			<button style="background:#007944;border:none;color:#fff;font-size:1.1em;padding:10px;border-radius:8px;">
+				Applications
+			</button>
+			{% endif %}
+		</a>
+		{% endif %}
+			 <br>
+			<div style="font-size:0.9em">No. of Applicants: {{post.applications|length}}</div>
+		</div>
+
+	</div>
+
+	<div style="margin-top:20px;font-size: 1.3em;" class="det">
+		<div><span style="font-weight:bold;">Location : </span> {{post.locations}}</div>
+		<div><span style="font-weight:bold;">Experience : </span>Min:{{post.min_experience}} years - Max:{{post.max_experience}}</div>
+		<div><span style="font-weight:bold;">Salary : </span> {{post.salary_range_from}}-{{post.salary_range_to}}</div>
+		<div><span style="font-weight:bold;">Skills : </span>{{post.skills}}</div>
+		<div><span style="font-weight:bold;">Perks : </span>{{post.perks}}</div>
+		<div style="width:40%;"><span style="font-weight:bold;">Description : </span>{{post.description}}</div>
+	</div>
+
+</div>
+
+<br/><br/>
+
+<div style="padding-left:10%;padding-right:5%;margin-top:15px;">
+	<div style="font-size:1.7em;">Similar Jobs</div>
+</div>
+
+<div class="recent_jobs_cont">
+
+<!-- Jinja starts here -->
+{% for post in posts %}
+	<a class="job_box_wrap" href="/get-job-details/{{post.post_id}}" style="text-decoration:none;color:black">
+		<div class="job_box">
+			<img src="../static/img/sb.png" style="width:50px;height:50px;">
+			<div style="margin-left:20px;">
+				<div style="font-size:1.5em;font-family:'Monsterrat',sans-serif;font-weight: 700;">{{post.role}}</div>
+				<div style="font-size:1.2em;">Salary : {{post.salary_range_from}}-{{post.salary_range_to}}</div>
+				<div style="font-size:1.2em;">{{post.locations}}</div>
+			</div>
+	 	</div>
+	</a>
+  {% endfor %}
+<!-- Jinja ends here -->
+
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+	  {% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+	      swal('{{message}}');
+	    {% endfor %}
+	  {% endif %}
+	{% endwith %}
+	</script>
+</body>
+</html>

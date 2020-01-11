@@ -7,7 +7,7 @@
 
 	<div class="container" style="width:40%;margin-top:12%">
 
-		<h1 style="text-align:center">LOGIN</h1>
+		<h1 style="text-align:center">{{user_type|upper}} : LOGIN</h1>
 
 
 		<div style="margin-top:30px;">
@@ -26,5 +26,15 @@
 		</div>
 	</div>
 
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript">
+		  {% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		      swal('{{message}}');
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+		</script>
 </body>
 </html>

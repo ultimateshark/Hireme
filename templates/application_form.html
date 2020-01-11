@@ -31,6 +31,15 @@
 			</form>
 		</div>
 	</div>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript">
+		  {% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		      swal('{{message}}');
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+		</script>
 </body>
 </html>
